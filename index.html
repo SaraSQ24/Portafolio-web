@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sara Segovia — Departamento de arte & Escenografía</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d0d0d;
+      --bg2:      #141414;
+      --bg3:      #1a1a1a;
+      --gold:     #96E663;
+      --gold-lt:  #c5faa1;
+      --white:    #f2ede6;
+      --muted:    #7a7572;
+      --border:   #2a2a2a;
+      --serif:    'Cormorant Garamond', Georgia, serif;
+      --sans:     'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+    /* ── NAV ── */
+    #main-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      transition: background .4s, padding .4s;
+    }
+    #main-nav.scrolled {
+      background: rgba(13,13,13,.92);
+      backdrop-filter: blur(12px);
+      padding: 1rem 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      letter-spacing: .12em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: .75rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .25s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HAMBURGER (mobile) ── */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; border: none; background: none; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 1px; background: var(--white); transition: .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(13,13,13,.97);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: .1em;
+      transition: color .25s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 640px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(13,13,13,.25) 0%, rgba(13,13,13,.75) 70%, var(--bg) 100%),
+        url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1800&q=80') center/cover no-repeat;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 0 4rem 7rem;
+      max-width: 900px;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: .65rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: .35rem .9rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 300;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      letter-spacing: -.01em;
+    }
+    .hero-title em { font-style: italic; color: var(--gold-lt); }
+    .hero-subtitle {
+      font-size: .95rem;
+      color: rgba(242,237,230,.65);
+      max-width: 500px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: .85rem 2.2rem;
+      font-size: .7rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: .25s;
+    }
+    .btn-gold {
+      background: var(--gold);
+      color: var(--bg);
+      font-weight: 500;
+    }
+    .btn-gold:hover { background: var(--gold-lt); }
+    .btn-outline {
+      border: 1px solid rgba(242,237,230,.35);
+      color: var(--white);
+      margin-left: 1rem;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .5rem;
+      font-size: .6rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      z-index: 1;
+    }
+    .scroll-indicator::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: line-drop 1.8s ease-in-out infinite;
+    }
+    @keyframes line-drop {
+      0%,100% { transform: scaleY(1); opacity: 1; }
+      50%      { transform: scaleY(.5); opacity: .4; }
+    }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 7rem 4rem; }
+    .section-label {
+      font-size: .62rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+    .section-title em { font-style: italic; }
+    .divider {
+      width: 48px;
+      height: 1px;
+      background: var(--gold);
+      margin-bottom: 2rem;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--bg); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img-wrap img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+    }
+    .about-img-accent {
+      position: absolute;
+      top: -1.5rem;
+      left: -1.5rem;
+      width: 100%;
+      height: 100%;
+      border: 1px solid var(--gold);
+      z-index: -1;
+    }
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .stat {
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+    }
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: .25rem;
+    }
+    .stat-label { font-size: .72rem; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
+    .about-text p { color: rgba(242,237,230,.72); margin-bottom: 1.2rem; font-size: .95rem; }
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      margin-top: 2rem;
+    }
+    .skill-tag {
+      font-size: .65rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: .4rem 1rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      transition: .25s;
+    }
+    .skill-tag:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── PORTFOLIO ── */
+    #portfolio { background: var(--bg2); }
+    .portfolio-top {
+      max-width: 1200px;
+      margin: 0 auto 4rem;
+    }
+    .proj-list {
+      max-width: 1200px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Each project row */
+    .proj-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .proj-row {
+      display: flex;
+      align-items: stretch;
+      cursor: pointer;
+      min-height: 340px;
+      transition: background .3s;
+    }
+    .proj-row:hover { background: rgba(255,255,255,.02); }
+
+    /* Alternating: even items flip */
+    .proj-item:nth-child(even) .proj-row { flex-direction: row-reverse; }
+
+    .proj-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3.5rem 4rem;
+      position: relative;
+    }
+    .proj-num {
+      font-family: var(--serif);
+      font-size: 5rem;
+      font-weight: 300;
+      color: var(--border);
+      line-height: 1;
+      position: absolute;
+      top: 2rem;
+      right: 4rem;
+      transition: color .4s;
+      user-select: none;
+    }
+    .proj-item:nth-child(even) .proj-num { right: auto; left: 4rem; }
+    .proj-item.open .proj-num,
+    .proj-row:hover .proj-num { color: rgba(201,168,76,.18); }
+
+    .proj-cat-tag {
+      font-size: .6rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .8rem;
+    }
+    .proj-title {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+    .proj-summary {
+      font-size: .88rem;
+      color: rgba(242,237,230,.6);
+      line-height: 1.75;
+      max-width: 420px;
+      margin-bottom: 2rem;
+    }
+    .proj-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: .7rem;
+      font-size: .65rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color .25s;
+    }
+    .proj-row:hover .proj-toggle { color: var(--gold); }
+    .proj-item.open .proj-toggle { color: var(--gold); }
+    .proj-toggle-icon {
+      width: 24px; height: 24px;
+      border: 1px solid currentColor;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      line-height: 1;
+      transition: transform .4s, border-color .25s;
+      flex-shrink: 0;
+    }
+    .proj-item.open .proj-toggle-icon { transform: rotate(45deg); }
+
+    .proj-img-side {
+      flex: 0 0 48%;
+      overflow: hidden;
+      position: relative;
+    }
+    .proj-img-side img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .8s cubic-bezier(.25,.46,.45,.94);
+    }
+    .proj-row:hover .proj-img-side img { transform: scale(1.04); }
+
+    /* Expandable details */
+    .proj-details {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height .65s cubic-bezier(.25,.46,.45,.94);
+    }
+    .proj-item.open .proj-details { max-height: 4800px; }
+    .proj-details-inner {
+      padding: 3rem 4rem 3.5rem;
+      border-top: 1px solid var(--border);
+      background: var(--bg3);
+    }
+    .proj-details-top {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 3rem;
+    }
+    .proj-meta-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .proj-meta-item label {
+      display: block;
+      font-size: .58rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .25rem;
+    }
+    .proj-meta-item span { font-size: .88rem; color: rgba(242,237,230,.8); }
+    .proj-full-desc {
+      font-size: .92rem;
+      color: rgba(242,237,230,.68);
+      line-height: 1.85;
+      padding-top: .2rem;
+    }
+
+    /* Gallery inside the expandable details */
+    .proj-gallery {
+      margin-top: 2.6rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: .8rem;
+    }
+    .proj-gallery img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      border: 1px solid var(--border);
+      cursor: zoom-in;
+      transition: opacity .25s, transform .5s cubic-bezier(.25,.46,.45,.94);
+    }
+    .proj-gallery img:hover { opacity: .82; transform: scale(1.015); }
+
+    /* Project category groups */
+    .proj-group-head {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5rem 0 1.8rem;
+    }
+    .proj-group-head:first-of-type { padding-top: 0; }
+    .proj-group-kicker {
+      display: block;
+      font-size: .62rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .55rem;
+    }
+    .proj-group-title {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+      font-weight: 300;
+      color: var(--white);
+    }
+    .proj-group-title em { font-style: italic; color: var(--gold-lt); }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      background: rgba(8,8,8,.94);
+      backdrop-filter: blur(6px);
+      cursor: zoom-out;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 88vh;
+      object-fit: contain;
+      box-shadow: 0 24px 70px rgba(0,0,0,.6);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1.4rem;
+      right: 2rem;
+      font-size: 2.2rem;
+      line-height: 1;
+      color: var(--white);
+      cursor: pointer;
+      transition: color .25s;
+    }
+    .lightbox-close:hover { color: var(--gold); }
+
+    /* ── SERVICES ── */
+    #services { background: var(--bg); }
+    .services-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 4rem;
+    }
+    .service-item {
+      background: var(--bg);
+      padding: 3rem 2.5rem;
+      transition: background .3s;
+    }
+    .service-item:hover { background: var(--bg2); }
+    .service-num {
+      font-family: var(--serif);
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      transition: color .3s;
+    }
+    .service-item:hover .service-num { color: var(--gold); }
+    .service-name {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+    .service-desc { font-size: .85rem; color: var(--muted); line-height: 1.75; }
+
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg); }
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+    }
+    .contact-info p {
+      font-size: .95rem;
+      color: rgba(242,237,230,.65);
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+    .contact-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .contact-line { display: flex; flex-direction: column; gap: .2rem; }
+    .contact-line-label { font-size: .6rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+    .contact-line-val { font-size: .95rem; color: var(--white); }
+    .social-row { display: flex; gap: 1rem; margin-top: 2rem; }
+    .social-link {
+      width: 40px; height: 40px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: .05em;
+      transition: .25s;
+    }
+    .social-link:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* FORM */
+    .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+    .form-group { display: flex; flex-direction: column; gap: .5rem; }
+    .form-group label { font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: .85rem 1rem;
+      font-family: var(--sans);
+      font-size: .9rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color .25s;
+      resize: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--gold); }
+    .form-group select { appearance: none; cursor: pointer; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .form-note { font-size: .72rem; color: var(--muted); margin-top: -.5rem; }
+    .btn-submit {
+      background: var(--gold);
+      color: var(--bg);
+      border: none;
+      padding: 1rem 2.5rem;
+      font-family: var(--sans);
+      font-size: .7rem;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .25s;
+      align-self: flex-start;
+    }
+    .btn-submit:hover { background: var(--gold-lt); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 3rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      letter-spacing: .1em;
+      color: var(--white);
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-copy { font-size: .72rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color .25s; }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ── REVEAL ANIMATION ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .75s ease, transform .75s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    .reveal-delay-4 { transition-delay: .4s; }
+    .reveal-delay-5 { transition-delay: .5s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      #main-nav { padding: 1.5rem 2.5rem; }
+      #main-nav.scrolled { padding: 1rem 2.5rem; }
+      section { padding: 5rem 2.5rem; }
+      footer { padding: 2.5rem; }
+      .hero-content { padding: 0 2.5rem 5rem; }
+      .scroll-indicator { right: 2.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-img-wrap { max-width: 460px; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-inner { grid-template-columns: 1fr; gap: 3.5rem; }
+    }
+    @media (max-width: 900px) {
+      .proj-row { flex-direction: column !important; min-height: unset; }
+      .proj-img-side { flex: 0 0 260px; height: 260px; }
+      .proj-text { padding: 2.5rem 2rem; }
+      .proj-num { display: none; }
+      .proj-details-inner { padding: 2rem; }
+      .proj-details-top { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .services-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-content { padding: 0 1.5rem 5rem; }
+      section { padding: 4rem 1.5rem; }
+      footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+      .proj-gallery { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: .5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">Sara<span> </span>Segovia</a>
+  <ul class="nav-links">
+    <li><a href="#about">Sobre mí</a></li>
+    <li><a href="#portfolio">Proyectos</a></li>
+    <li><a href="#services">Servicios</a></li>
+    <li><a href="#contact">Contacto</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#about"        onclick="closeMobile()">Sobre mí</a>
+  <a href="#portfolio"    onclick="closeMobile()">Proyectos</a>
+  <a href="#services"     onclick="closeMobile()">Servicios</a>
+  <a href="#contact"      onclick="closeMobile()">Contacto</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Diseñadora de interiores &amp; escenógrafa</div>
+    <h1 class="hero-title">
+      Espacios que<br><em>cuentan historias</em>
+    </h1>
+    <p class="hero-subtitle">
+      Creo entornos que emocionan, desde residencias de autor hasta escenografías para teatro, cine y televisión. Cada proyecto es un universo visual con voz propia.
+    </p>
+    <a href="#portfolio" class="btn btn-gold">Ver proyectos</a>
+    <a href="#contact"   class="btn btn-outline">Trabajemos juntos</a>
+  </div>
+  <div class="scroll-indicator">Scroll</div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap reveal">
+      <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&q=80" alt=" Segovia" />
+      <div class="about-img-accent"></div>
+    </div>
+    <div class="about-text">
+      <p class="section-label reveal">Sobre mí</p>
+      <h2 class="section-title reveal reveal-delay-1">
+        Donde el diseño<br>y la narrativa <em>convergen</em>
+      </h2>
+      <div class="divider reveal reveal-delay-2"></div>
+      <p class="reveal reveal-delay-2">
+        Soy Sara Segovia, diseñadora con más de doce años de experiencia creando espacios que trascienden la función. Mi trabajo combina el rigor del diseño de interiores con la imaginación desbordante de la escenografía teatral y audiovisual.
+      </p>
+      <p class="reveal reveal-delay-3">
+        Me formé en Diseño de Interiores en la Universidad de Buenos Aires y amplié mi visión con un máster en Escenografía en la Escuela Nacional de Arte Dramático. Esta doble formación me permite leer cada espacio —real o ficticio— como un lienzo narrativo.
+      </p>
+      <p class="reveal reveal-delay-3">
+        Colaboro con directores, productoras y clientes privados que buscan algo más que un espacio bonito: buscan un espacio que signifique.
+      </p>
+      <div class="skills-list reveal reveal-delay-4">
+        <span class="skill-tag">Diseño de interiores</span>
+        <span class="skill-tag">Escenografía teatral</span>
+        <span class="skill-tag">Art direction — Cine</span>
+        <span class="skill-tag">Dirección de arte — TV</span>
+        <span class="skill-tag">Diseño de iluminación</span>
+        <span class="skill-tag">Concept &amp; moodboard</span>
+        <span class="skill-tag">Autocad / SketchUp</span>
+        <span class="skill-tag">Renders 3D</span>
+      </div>
+      <div class="about-stats reveal reveal-delay-4">
+        <div class="stat"><div class="stat-num">12+</div><div class="stat-label">años de experiencia</div></div>
+        <div class="stat"><div class="stat-num">80+</div><div class="stat-label">proyectos realizados</div></div>
+        <div class="stat"><div class="stat-num">34</div><div class="stat-label">producciones audiovisuales</div></div>
+        <div class="stat"><div class="stat-num">6</div><div class="stat-label">premios &amp; nominaciones</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PORTFOLIO ══ -->
+<section id="portfolio">
+  <div class="portfolio-top">
+    <p class="section-label reveal">Proyectos</p>
+    <h2 class="section-title reveal reveal-delay-1">Obra seleccionada</h2>
+    <p class="reveal reveal-delay-2" style="max-width:620px;color:rgba(242,237,230,.6);font-size:.95rem;">Una selección de trabajos de dirección de arte, escenografía y diseño de espacios. Haz clic en cualquier proyecto para ver la ficha y la galería completa.</p>
+  </div>
+
+  <!-- ░░ GRUPO 1 · PROFESIONALES ░░ -->
+  <div class="proj-group-head reveal">
+    <span class="proj-group-kicker">01 — Proyectos profesionales</span>
+    <h3 class="proj-group-title">Cine, televisión y <em>videoclip</em></h3>
+  </div>
+
+  <div class="proj-list">
+
+    <!-- 01 · Timadores -->
+    <div class="proj-item reveal">
+      <div class="proj-row" onclick="toggleProj(this)">
+        <div class="proj-text">
+          <span class="proj-num">01</span>
+          <div class="proj-cat-tag">Serie de TV · Dirección de arte</div>
+          <h3 class="proj-title">Timadores</h3>
+          <p class="proj-summary">Dirección de arte de los decorados de la serie de televisión: un universo distinto por episodio, del laboratorio forense a una parada de melones en plena carretera.</p>
+          <div class="proj-toggle">
+            <span class="proj-toggle-icon">+</span>
+            <span>Ver proyecto</span>
+          </div>
+        </div>
+        <div class="proj-img-side">
+          <img src="assets/img/timadores/cover.jpg" alt="Timadores" loading="lazy" />
+        </div>
+      </div>
+      <div class="proj-details">
+        <div class="proj-details-inner">
+          <div class="proj-details-top">
+            <div class="proj-meta-grid">
+              <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto profesional</span></div>
+              <div class="proj-meta-item"><label>Formato</label><span>Serie de televisión</span></div>
+              <div class="proj-meta-item"><label>Rol</label><span>Dirección de arte y ambientación</span></div>
+              <div class="proj-meta-item"><label>Decorados</label><span>Múltiples episodios</span></div>
+            </div>
+            <p class="proj-full-desc">Dirección de arte y ambientación de los decorados de la serie. Cada episodio plantea un mundo propio —un laboratorio forense, un desván de inspiración zen, un taller de restauración arqueológica, una parada de melones en plena carretera o un escenario ritual— que hay que documentar, construir y vestir hasta el último detalle para que la cámara lo dé por real.</p>
+          </div>
+          <div class="proj-gallery">
+            <img src="assets/img/timadores/1.jpg" alt="Timadores — decorado 1" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/timadores/2.jpg" alt="Timadores — decorado 2" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/timadores/3.jpg" alt="Timadores — decorado 3" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/timadores/4.jpg" alt="Timadores — decorado 4" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/timadores/5.jpg" alt="Timadores — decorado 5" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/timadores/6.jpg" alt="Timadores — decorado 6" loading="lazy" onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 · Slasher -->
+    <div class="proj-item reveal">
+      <div class="proj-row" onclick="toggleProj(this)">
+        <div class="proj-text">
+          <span class="proj-num">02</span>
+          <div class="proj-cat-tag">Cortometraje · Terror</div>
+          <h3 class="proj-title">Slasher</h3>
+          <p class="proj-summary">Ambientación de un cortometraje de terror. El panel de pistas y la máscara siembran la amenaza mucho antes de que aparezca el asesino.</p>
+          <div class="proj-toggle">
+            <span class="proj-toggle-icon">+</span>
+            <span>Ver proyecto</span>
+          </div>
+        </div>
+        <div class="proj-img-side">
+          <img src="assets/img/slasher/cover.jpg" alt="Slasher" loading="lazy" />
+        </div>
+      </div>
+      <div class="proj-details">
+        <div class="proj-details-inner">
+          <div class="proj-details-top">
+            <div class="proj-meta-grid">
+              <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto profesional</span></div>
+              <div class="proj-meta-item"><label>Formato</label><span>Cortometraje</span></div>
+              <div class="proj-meta-item"><label>Género</label><span>Terror · thriller</span></div>
+              <div class="proj-meta-item"><label>Rol</label><span>Dirección de arte</span></div>
+            </div>
+            <p class="proj-full-desc">Dirección de arte de un cortometraje de terror. El espacio de investigación —el panel de fotografías unidas por hilos, los recortes, la máscara colgada en la pared— se diseña para sembrar la amenaza mucho antes de que aparezca el asesino. Cada objeto es a la vez pista y presagio.</p>
+          </div>
+          <div class="proj-gallery">
+            <img src="assets/img/slasher/1.jpg" alt="Slasher — 1" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/slasher/2.jpg" alt="Slasher — 2" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/slasher/3.jpg" alt="Slasher — 3" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/slasher/4.jpg" alt="Slasher — 4" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/slasher/5.jpg" alt="Slasher — 5" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/slasher/6.jpg" alt="Slasher — 6" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/slasher/7.jpg" alt="Slasher — 7" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/slasher/8.jpg" alt="Slasher — 8" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/slasher/9.jpg" alt="Slasher — 9" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/slasher/10.jpg" alt="Slasher — 10" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/slasher/11.jpg" alt="Slasher — 11" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/slasher/12.jpg" alt="Slasher — 12" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/slasher/13.jpg" alt="Slasher — 13" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/slasher/14.jpg" alt="Slasher — 14" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/slasher/15.jpg" alt="Slasher — 15" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/slasher/16.jpg" alt="Slasher — 16" loading="lazy" onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 · Circus -->
+    <div class="proj-item reveal">
+      <div class="proj-row" onclick="toggleProj(this)">
+        <div class="proj-text">
+          <span class="proj-num">03</span>
+          <div class="proj-cat-tag">Audiovisual · Ambientación</div>
+          <h3 class="proj-title">Circus</h3>
+          <p class="proj-summary">Ambientación de aire vintage y cabaret: terciopelo rojo, mobiliario de época y vestuario circense compuestos en un solo plano.</p>
+          <div class="proj-toggle">
+            <span class="proj-toggle-icon">+</span>
+            <span>Ver proyecto</span>
+          </div>
+        </div>
+        <div class="proj-img-side">
+          <img src="assets/img/circus/cover.jpg" alt="Circus" loading="lazy" />
+        </div>
+      </div>
+      <div class="proj-details">
+        <div class="proj-details-inner">
+          <div class="proj-details-top">
+            <div class="proj-meta-grid">
+              <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto profesional</span></div>
+              <div class="proj-meta-item"><label>Formato</label><span>Producción audiovisual</span></div>
+              <div class="proj-meta-item"><label>Rol</label><span>Ambientación y atrezzo</span></div>
+              <div class="proj-meta-item"><label>Estilo</label><span>Vintage · cabaret</span></div>
+            </div>
+            <p class="proj-full-desc">Ambientación de un espacio de aire vintage y atmósfera de cabaret: terciopelo rojo, mobiliario de época, espejos desgastados y vestuario de inspiración circense conviven en un mismo plano. El reto fue componer la acumulación de objetos para que resultara cargada pero legible en cámara.</p>
+          </div>
+          <div class="proj-gallery">
+            <img src="assets/img/circus/1.jpg" alt="Circus — 1" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/circus/2.jpg" alt="Circus — 2" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/circus/3.jpg" alt="Circus — 3" loading="lazy" onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 · Cortometraje ESCAC -->
+    <div class="proj-item reveal">
+      <div class="proj-row" onclick="toggleProj(this)">
+        <div class="proj-text">
+          <span class="proj-num">04</span>
+          <div class="proj-cat-tag">Cortometraje · ESCAC</div>
+          <h3 class="proj-title">Cortometraje ESCAC</h3>
+          <p class="proj-summary">Dirección de arte de un cortometraje de la ESCAC: una cena navideña doméstica resuelta hasta el último detalle de mesa y atrezzo.</p>
+          <div class="proj-toggle">
+            <span class="proj-toggle-icon">+</span>
+            <span>Ver proyecto</span>
+          </div>
+        </div>
+        <div class="proj-img-side">
+          <img src="assets/img/corto-escac/cover.jpg" alt="Cortometraje ESCAC" loading="lazy" />
+        </div>
+      </div>
+      <div class="proj-details">
+        <div class="proj-details-inner">
+          <div class="proj-details-top">
+            <div class="proj-meta-grid">
+              <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto profesional</span></div>
+              <div class="proj-meta-item"><label>Formato</label><span>Cortometraje</span></div>
+              <div class="proj-meta-item"><label>Centro</label><span>ESCAC</span></div>
+              <div class="proj-meta-item"><label>Rol</label><span>Dirección de arte · ambientación</span></div>
+            </div>
+            <p class="proj-full-desc">Dirección de arte y ambientación para un cortometraje realizado en la ESCAC. La secuencia de una cena navideña doméstica se resolvió desde el atrezzo: vajilla, mantelería, centros de mesa y decoración construyen el tono familiar de la escena y la época del año sin necesidad de diálogo.</p>
+          </div>
+          <div class="proj-gallery">
+            <img src="assets/img/corto-escac/1.jpg" alt="Cortometraje ESCAC — 1" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/corto-escac/2.jpg" alt="Cortometraje ESCAC — 2" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/corto-escac/3.jpg" alt="Cortometraje ESCAC — 3" loading="lazy" onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 · Welcome to my Party -->
+    <div class="proj-item reveal">
+      <div class="proj-row" onclick="toggleProj(this)">
+        <div class="proj-text">
+          <span class="proj-num">05</span>
+          <div class="proj-cat-tag">Videoclip · Escenografía</div>
+          <h3 class="proj-title">Welcome to my Party</h3>
+          <p class="proj-summary">Set de videoclip con estética de fiesta onírica: una gran luna dorada, nubes, estrellas y cortinas de terciopelo y oropel.</p>
+          <div class="proj-toggle">
+            <span class="proj-toggle-icon">+</span>
+            <span>Ver proyecto</span>
+          </div>
+        </div>
+        <div class="proj-img-side">
+          <img src="assets/img/welcome/cover.jpg" alt="Welcome to my Party" loading="lazy" />
+        </div>
+      </div>
+      <div class="proj-details">
+        <div class="proj-details-inner">
+          <div class="proj-details-top">
+            <div class="proj-meta-grid">
+              <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto profesional</span></div>
+              <div class="proj-meta-item"><label>Formato</label><span>Videoclip</span></div>
+              <div class="proj-meta-item"><label>Rol</label><span>Escenografía y atrezzo</span></div>
+              <div class="proj-meta-item"><label>Estética</label><span>Fiesta onírica</span></div>
+            </div>
+            <p class="proj-full-desc">Diseño y construcción del set de un videoclip con estética de fiesta onírica. Una gran luna creciente dorada, nubes de algodón, estrellas y cortinas de terciopelo y oropel transforman el escenario en un universo celeste y festivo.</p>
+          </div>
+          <div class="proj-gallery">
+            <img src="assets/img/welcome/1.jpg" alt="Welcome to my Party — 1" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/welcome/2.jpg" alt="Welcome to my Party — 2" loading="lazy" onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 · Diumenge sense drama -->
+    <div class="proj-item reveal">
+      <div class="proj-row" onclick="toggleProj(this)">
+        <div class="proj-text">
+          <span class="proj-num">06</span>
+          <div class="proj-cat-tag">Videoclip · Ambientación</div>
+          <h3 class="proj-title">Diumenge sense drama</h3>
+          <p class="proj-summary">Dirección de arte de un videoclip en exteriores: banderas y estandartes de color transforman un paseo marítimo en una fiesta popular.</p>
+          <div class="proj-toggle">
+            <span class="proj-toggle-icon">+</span>
+            <span>Ver proyecto</span>
+          </div>
+        </div>
+        <div class="proj-img-side">
+          <img src="assets/img/diumenge/cover.jpg" alt="Diumenge sense drama" loading="lazy" />
+        </div>
+      </div>
+      <div class="proj-details">
+        <div class="proj-details-inner">
+          <div class="proj-details-top">
+            <div class="proj-meta-grid">
+              <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto profesional</span></div>
+              <div class="proj-meta-item"><label>Formato</label><span>Videoclip</span></div>
+              <div class="proj-meta-item"><label>Localización</label><span>Exterior · paseo marítimo</span></div>
+              <div class="proj-meta-item"><label>Rol</label><span>Ambientación</span></div>
+            </div>
+            <p class="proj-full-desc">Dirección de arte de un videoclip rodado en exteriores. Banderas, estandartes y elementos de color convierten un paseo marítimo en una celebración popular; la paleta se pensó para destacar incluso bajo un cielo cambiante.</p>
+          </div>
+          <div class="proj-gallery">
+            <img src="assets/img/diumenge/1.jpg" alt="Diumenge sense drama — 1" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/diumenge/2.jpg" alt="Diumenge sense drama — 2" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/diumenge/3.jpg" alt="Diumenge sense drama — 3" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/diumenge/4.jpg" alt="Diumenge sense drama — 4" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/diumenge/5.jpg" alt="Diumenge sense drama — 5" loading="lazy" onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ░░ GRUPO 2 · MÁSTER ░░ -->
+  <div class="proj-group-head reveal">
+    <span class="proj-group-kicker">02 — Proyectos de máster</span>
+    <h3 class="proj-group-title">Decorado y <em>escenografía</em></h3>
+  </div>
+
+  <div class="proj-list">
+
+    <!-- 07 · The Lighthouse -->
+    <div class="proj-item reveal">
+      <div class="proj-row" onclick="toggleProj(this)">
+        <div class="proj-text">
+          <span class="proj-num">07</span>
+          <div class="proj-cat-tag">Máster · Decorado 3D</div>
+          <h3 class="proj-title">The Lighthouse</h3>
+          <p class="proj-summary">Decorado interior de un faro modelado en 3D: piedra, hierro y una escalera de caracol con atrezzo minucioso.</p>
+          <div class="proj-toggle">
+            <span class="proj-toggle-icon">+</span>
+            <span>Ver proyecto</span>
+          </div>
+        </div>
+        <div class="proj-img-side">
+          <img src="assets/img/the-lighthouse/cover.jpg" alt="The Lighthouse" loading="lazy" />
+        </div>
+      </div>
+      <div class="proj-details">
+        <div class="proj-details-inner">
+          <div class="proj-details-top">
+            <div class="proj-meta-grid">
+              <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto de máster</span></div>
+              <div class="proj-meta-item"><label>Disciplina</label><span>Diseño de decorados</span></div>
+              <div class="proj-meta-item"><label>Técnica</label><span>Modelado y render 3D</span></div>
+              <div class="proj-meta-item"><label>Espacio</label><span>Interior de faro</span></div>
+            </div>
+            <p class="proj-full-desc">Diseño integral del decorado interior de un faro, modelado y renderizado en 3D. Piedra, hierro forjado, una escalera de caracol central y un atrezzo minucioso de barricas, frascos y mapas construyen una atmósfera densa y habitada antes del rodaje.</p>
+          </div>
+          <div class="proj-gallery">
+            <img src="assets/img/the-lighthouse/1.jpg" alt="The Lighthouse — 1" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/the-lighthouse/2.jpg" alt="The Lighthouse — 2" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/the-lighthouse/3.jpg" alt="The Lighthouse — 3" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/the-lighthouse/4.jpg" alt="The Lighthouse — 4" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/the-lighthouse/5.jpg" alt="The Lighthouse — 5" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/the-lighthouse/6.jpg" alt="The Lighthouse — 6" loading="lazy" onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 · Jared y el Walkman -->
+    <div class="proj-item reveal">
+      <div class="proj-row" onclick="toggleProj(this)">
+        <div class="proj-text">
+          <span class="proj-num">08</span>
+          <div class="proj-cat-tag">Máster · Decorado 3D</div>
+          <h3 class="proj-title">Jared y el Walkman</h3>
+          <p class="proj-summary">Decorado para el proyecto «Jared y el Walkman» resuelto en 3D: un interior de ventanales, vitrinas y superficies reflectantes.</p>
+          <div class="proj-toggle">
+            <span class="proj-toggle-icon">+</span>
+            <span>Ver proyecto</span>
+          </div>
+        </div>
+        <div class="proj-img-side">
+          <img src="assets/img/jared/cover.jpg" alt="Jared y el Walkman" loading="lazy" />
+        </div>
+      </div>
+      <div class="proj-details">
+        <div class="proj-details-inner">
+          <div class="proj-details-top">
+            <div class="proj-meta-grid">
+              <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto de máster</span></div>
+              <div class="proj-meta-item"><label>Disciplina</label><span>Diseño de decorados</span></div>
+              <div class="proj-meta-item"><label>Técnica</label><span>Render 3D</span></div>
+              <div class="proj-meta-item"><label>Proyecto</label><span>Jared y el Walkman</span></div>
+            </div>
+            <p class="proj-full-desc">Concepto y diseño del decorado para el proyecto «Jared y el Walkman», resuelto íntegramente en 3D. Un interior contemporáneo de grandes ventanales, vitrinas y superficies reflectantes que permite estudiar materiales, iluminación y circulación antes de construir nada.</p>
+          </div>
+          <div class="proj-gallery">
+            <img src="assets/img/jared/1.jpg" alt="Jared y el Walkman — 1" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/jared/2.jpg" alt="Jared y el Walkman — 2" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/jared/3.jpg" alt="Jared y el Walkman — 3" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/jared/4.jpg" alt="Jared y el Walkman — 4" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/jared/5.jpg" alt="Jared y el Walkman — 5" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/jared/6.jpg" alt="Jared y el Walkman — 6" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/jared/7.jpg" alt="Jared y el Walkman — 7" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/jared/8.jpg" alt="Jared y el Walkman — 8" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/jared/9.jpg" alt="Jared y el Walkman — 9" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/jared/10.jpg" alt="Jared y el Walkman — 10" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/jared/11.jpg" alt="Jared y el Walkman — 11" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/jared/12.jpg" alt="Jared y el Walkman — 12" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/jared/13.jpg" alt="Jared y el Walkman — 13" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/jared/14.jpg" alt="Jared y el Walkman — 14" loading="lazy" onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 09 · La casa de Bernarda Alba -->
+    <div class="proj-item reveal">
+      <div class="proj-row" onclick="toggleProj(this)">
+        <div class="proj-text">
+          <span class="proj-num">09</span>
+          <div class="proj-cat-tag">Máster · Escenografía teatral</div>
+          <h3 class="proj-title">La casa de Bernarda Alba</h3>
+          <p class="proj-summary">Maqueta escenográfica para la obra de Lorca: muros encalados y arcos bañados por una luz roja que vuelve el patio una cárcel.</p>
+          <div class="proj-toggle">
+            <span class="proj-toggle-icon">+</span>
+            <span>Ver proyecto</span>
+          </div>
+        </div>
+        <div class="proj-img-side">
+          <img src="assets/img/bernarda-alba/cover.jpg" alt="La casa de Bernarda Alba" loading="lazy" />
+        </div>
+      </div>
+      <div class="proj-details">
+        <div class="proj-details-inner">
+          <div class="proj-details-top">
+            <div class="proj-meta-grid">
+              <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto de máster</span></div>
+              <div class="proj-meta-item"><label>Disciplina</label><span>Escenografía teatral</span></div>
+              <div class="proj-meta-item"><label>Texto</label><span>F. García Lorca</span></div>
+              <div class="proj-meta-item"><label>Técnica</label><span>Maqueta + iluminación</span></div>
+            </div>
+            <p class="proj-full-desc">Propuesta escenográfica para «La casa de Bernarda Alba», de Federico García Lorca, presentada como maqueta. Muros encalados y vanos en arco atravesados por una luz roja convierten el patio en una cárcel sofocante, traduciendo en espacio el encierro y la tensión del texto.</p>
+          </div>
+          <div class="proj-gallery">
+            <img src="assets/img/bernarda-alba/1.jpg" alt="La casa de Bernarda Alba — 1" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/bernarda-alba/2.jpg" alt="La casa de Bernarda Alba — 2" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/bernarda-alba/3.jpg" alt="La casa de Bernarda Alba — 3" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/bernarda-alba/4.jpg" alt="La casa de Bernarda Alba — 4" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/bernarda-alba/5.jpg" alt="La casa de Bernarda Alba — 5" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/bernarda-alba/6.jpg" alt="La casa de Bernarda Alba — 6" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/bernarda-alba/7.jpg" alt="La casa de Bernarda Alba — 7" loading="lazy" onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 · Máscara -->
+    <div class="proj-item reveal">
+      <div class="proj-row" onclick="toggleProj(this)">
+        <div class="proj-text">
+          <span class="proj-num">10</span>
+          <div class="proj-cat-tag">Máster · Atrezzo</div>
+          <h3 class="proj-title">Máscara</h3>
+          <p class="proj-summary">Máscara-objeto construida con técnicas mixtas: flores naturales y un paisaje pintado montados sobre el rostro.</p>
+          <div class="proj-toggle">
+            <span class="proj-toggle-icon">+</span>
+            <span>Ver proyecto</span>
+          </div>
+        </div>
+        <div class="proj-img-side">
+          <img src="assets/img/mascara/cover.jpg" alt="Máscara" loading="lazy" />
+        </div>
+      </div>
+      <div class="proj-details">
+        <div class="proj-details-inner">
+          <div class="proj-details-top">
+            <div class="proj-meta-grid">
+              <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto de máster</span></div>
+              <div class="proj-meta-item"><label>Disciplina</label><span>Atrezzo · objeto</span></div>
+              <div class="proj-meta-item"><label>Técnica</label><span>Técnicas mixtas</span></div>
+              <div class="proj-meta-item"><label>Materiales</label><span>Flores y pintura</span></div>
+            </div>
+            <p class="proj-full-desc">Diseño y construcción de una máscara-objeto a partir de técnicas mixtas. Flores naturales, un paisaje pintado a mano y una composición casi escultórica se montan sobre el rostro, a medio camino entre el atrezzo, el retrato y la pieza de autor.</p>
+          </div>
+          <div class="proj-gallery">
+            <img src="assets/img/mascara/1.jpg" alt="Máscara — 1" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/mascara/2.jpg" alt="Máscara — 2" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/mascara/3.jpg" alt="Máscara — 3" loading="lazy" onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ░░ GRUPO 3 · CARRERA ░░ -->
+  <div class="proj-group-head reveal">
+    <span class="proj-group-kicker">03 — Proyectos de carrera</span>
+    <h3 class="proj-group-title">Diseño de espacios y <em>eventos</em></h3>
+  </div>
+
+  <div class="proj-list">
+
+    <!-- 11 · Renature -->
+    <div class="proj-item reveal">
+      <div class="proj-row" onclick="toggleProj(this)">
+        <div class="proj-text">
+          <span class="proj-num">11</span>
+          <div class="proj-cat-tag">Grado · Diseño de espacios</div>
+          <h3 class="proj-title">Renature</h3>
+          <p class="proj-summary">Proyecto que reintroduce la naturaleza en el edificio: la vegetación coloniza la sección y borra el límite entre dentro y fuera.</p>
+          <div class="proj-toggle">
+            <span class="proj-toggle-icon">+</span>
+            <span>Ver proyecto</span>
+          </div>
+        </div>
+        <div class="proj-img-side">
+          <img src="assets/img/renature/cover.jpg" alt="Renature" loading="lazy" />
+        </div>
+      </div>
+      <div class="proj-details">
+        <div class="proj-details-inner">
+          <div class="proj-details-top">
+            <div class="proj-meta-grid">
+              <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto de grado</span></div>
+              <div class="proj-meta-item"><label>Disciplina</label><span>Diseño de espacios</span></div>
+              <div class="proj-meta-item"><label>Enfoque</label><span>Sostenibilidad · biofilia</span></div>
+              <div class="proj-meta-item"><label>Técnica</label><span>Sección ilustrada</span></div>
+            </div>
+            <p class="proj-full-desc">Proyecto académico de diseño de espacios centrado en reintroducir la naturaleza en el edificio. La vegetación coloniza la sección y difumina el límite entre interior y exterior; la propuesta se comunica mediante una sección ilustrada en tonos cálidos y verdes.</p>
+          </div>
+          <div class="proj-gallery">
+            <img src="assets/img/renature/1.jpg" alt="Renature — 1" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/renature/2.jpg" alt="Renature — 2" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/renature/3.jpg" alt="Renature — 3" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/renature/4.jpg" alt="Renature — 4" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/renature/5.jpg" alt="Renature — 5" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/renature/6.jpg" alt="Renature — 6" loading="lazy" onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12 · Isla Trufa -->
+    <div class="proj-item reveal">
+      <div class="proj-row" onclick="toggleProj(this)">
+        <div class="proj-text">
+          <span class="proj-num">12</span>
+          <div class="proj-cat-tag">Grado · Interiorismo</div>
+          <h3 class="proj-title">Isla Trufa</h3>
+          <p class="proj-summary">Espacio gastronómico dibujado en sección: cocina, barra y sala enlazadas por una circulación continua en clave monocroma.</p>
+          <div class="proj-toggle">
+            <span class="proj-toggle-icon">+</span>
+            <span>Ver proyecto</span>
+          </div>
+        </div>
+        <div class="proj-img-side">
+          <img src="assets/img/isla-trufa/cover.jpg" alt="Isla Trufa" loading="lazy" />
+        </div>
+      </div>
+      <div class="proj-details">
+        <div class="proj-details-inner">
+          <div class="proj-details-top">
+            <div class="proj-meta-grid">
+              <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto de grado</span></div>
+              <div class="proj-meta-item"><label>Disciplina</label><span>Diseño de interiores</span></div>
+              <div class="proj-meta-item"><label>Programa</label><span>Espacio gastronómico</span></div>
+              <div class="proj-meta-item"><label>Técnica</label><span>Sección ilustrada</span></div>
+            </div>
+            <p class="proj-full-desc">Diseño de un espacio gastronómico desarrollado en sección. Varias plantas —cocina, barra y sala— se enlazan mediante una circulación continua, dibujadas en una clave monocroma que pone el foco en la relación entre niveles y en la experiencia del recorrido.</p>
+          </div>
+          <div class="proj-gallery">
+            <img src="assets/img/isla-trufa/1.jpg" alt="Isla Trufa — 1" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/isla-trufa/2.jpg" alt="Isla Trufa — 2" loading="lazy" onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 13 · Netting · Mahou -->
+    <div class="proj-item reveal">
+      <div class="proj-row" onclick="toggleProj(this)">
+        <div class="proj-text">
+          <span class="proj-num">13</span>
+          <div class="proj-cat-tag">Grado · Espacio efímero</div>
+          <h3 class="proj-title">Netting · Mahou</h3>
+          <p class="proj-summary">Espacio efímero para Mahou: una malla roja suspendida modela volúmenes y guía el recorrido sin levantar un solo muro.</p>
+          <div class="proj-toggle">
+            <span class="proj-toggle-icon">+</span>
+            <span>Ver proyecto</span>
+          </div>
+        </div>
+        <div class="proj-img-side">
+          <img src="assets/img/netting-mahou/cover.jpg" alt="Netting Mahou" loading="lazy" />
+        </div>
+      </div>
+      <div class="proj-details">
+        <div class="proj-details-inner">
+          <div class="proj-details-top">
+            <div class="proj-meta-grid">
+              <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto de grado</span></div>
+              <div class="proj-meta-item"><label>Disciplina</label><span>Espacio efímero</span></div>
+              <div class="proj-meta-item"><label>Marca (brief)</label><span>Mahou</span></div>
+              <div class="proj-meta-item"><label>Técnica</label><span>Render 3D</span></div>
+            </div>
+            <p class="proj-full-desc">Proyecto académico de espacio efímero para la marca Mahou. Una malla roja suspendida modela volúmenes dentro de la nave, filtra la luz y guía el recorrido del visitante, creando ámbitos sin recurrir a muros. Visualizado en 3D.</p>
+          </div>
+          <div class="proj-gallery">
+            <img src="assets/img/netting-mahou/1.jpg" alt="Netting Mahou — 1" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/netting-mahou/2.jpg" alt="Netting Mahou — 2" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/netting-mahou/3.jpg" alt="Netting Mahou — 3" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/netting-mahou/4.jpg" alt="Netting Mahou — 4" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/netting-mahou/5.jpg" alt="Netting Mahou — 5" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/netting-mahou/6.jpg" alt="Netting Mahou — 6" loading="lazy" onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 14 · Instante -->
+    <div class="proj-item reveal">
+      <div class="proj-row" onclick="toggleProj(this)">
+        <div class="proj-text">
+          <span class="proj-num">14</span>
+          <div class="proj-cat-tag">Grado · Diseño expositivo</div>
+          <h3 class="proj-title">Instante</h3>
+          <p class="proj-summary">Diseño expositivo sobre fotografía comunicado con una axonometría explotada que descompone salas, paneles y recorrido.</p>
+          <div class="proj-toggle">
+            <span class="proj-toggle-icon">+</span>
+            <span>Ver proyecto</span>
+          </div>
+        </div>
+        <div class="proj-img-side">
+          <img src="assets/img/instante/cover.jpg" alt="Instante" loading="lazy" />
+        </div>
+      </div>
+      <div class="proj-details">
+        <div class="proj-details-inner">
+          <div class="proj-details-top">
+            <div class="proj-meta-grid">
+              <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto de grado</span></div>
+              <div class="proj-meta-item"><label>Disciplina</label><span>Diseño expositivo</span></div>
+              <div class="proj-meta-item"><label>Tema</label><span>Fotografía</span></div>
+              <div class="proj-meta-item"><label>Técnica</label><span>Axonometría</span></div>
+            </div>
+            <p class="proj-full-desc">Proyecto de diseño expositivo en torno a la fotografía. El espacio, sus salas, paneles y recorrido se comunican mediante una axonometría explotada que descompone el conjunto en capas y deja leer de un vistazo la organización completa.</p>
+          </div>
+          <div class="proj-gallery">
+            <img src="assets/img/instante/1.jpg" alt="Instante — 1" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/instante/2.jpg" alt="Instante — 2" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/instante/3.jpg" alt="Instante — 3" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/instante/4.jpg" alt="Instante — 4" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/instante/5.jpg" alt="Instante — 5" loading="lazy" onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 15 · Feelmotion — Evento Gaming -->
+    <div class="proj-item reveal">
+      <div class="proj-row" onclick="toggleProj(this)">
+        <div class="proj-text">
+          <span class="proj-num">15</span>
+          <div class="proj-cat-tag">Grado · Evento</div>
+          <h3 class="proj-title">Feelmotion — Evento Gaming</h3>
+          <p class="proj-summary">Escenografía efímera para un evento gaming: tótems de cubos retroiluminados que forman la palabra GAME con iconos del videojuego.</p>
+          <div class="proj-toggle">
+            <span class="proj-toggle-icon">+</span>
+            <span>Ver proyecto</span>
+          </div>
+        </div>
+        <div class="proj-img-side">
+          <img src="assets/img/feelmotion-1/cover.jpg" alt="Feelmotion — Evento Gaming" loading="lazy" />
+        </div>
+      </div>
+      <div class="proj-details">
+        <div class="proj-details-inner">
+          <div class="proj-details-top">
+            <div class="proj-meta-grid">
+              <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto de grado</span></div>
+              <div class="proj-meta-item"><label>Disciplina</label><span>Diseño de eventos</span></div>
+              <div class="proj-meta-item"><label>Temática</label><span>Gaming</span></div>
+              <div class="proj-meta-item"><label>Elemento</label><span>Tótems luminosos</span></div>
+            </div>
+            <p class="proj-full-desc">Escenografía efímera para un evento de temática gaming. Tótems de cubos retroiluminados componen la palabra GAME rematada con iconos del videojuego, funcionando como punto de encuentro, photocall y señalética a la vez.</p>
+          </div>
+          <div class="proj-gallery">
+            <img src="assets/img/feelmotion-1/1.jpg" alt="Feelmotion Gaming — 1" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/feelmotion-1/2.jpg" alt="Feelmotion Gaming — 2" loading="lazy" onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 16 · Feelmotion — Gala -->
+    <div class="proj-item reveal">
+      <div class="proj-row" onclick="toggleProj(this)">
+        <div class="proj-text">
+          <span class="proj-num">16</span>
+          <div class="proj-cat-tag">Grado · Escenografía</div>
+          <h3 class="proj-title">Feelmotion — Gala</h3>
+          <p class="proj-summary">Escenografía para una gala en teatro: paneles calados en tonos pastel con motivos florales que visten la caja escénica.</p>
+          <div class="proj-toggle">
+            <span class="proj-toggle-icon">+</span>
+            <span>Ver proyecto</span>
+          </div>
+        </div>
+        <div class="proj-img-side">
+          <img src="assets/img/feelmotion-2/cover.jpg" alt="Feelmotion — Gala" loading="lazy" />
+        </div>
+      </div>
+      <div class="proj-details">
+        <div class="proj-details-inner">
+          <div class="proj-details-top">
+            <div class="proj-meta-grid">
+              <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto de grado</span></div>
+              <div class="proj-meta-item"><label>Disciplina</label><span>Escenografía de evento</span></div>
+              <div class="proj-meta-item"><label>Espacio</label><span>Teatro</span></div>
+              <div class="proj-meta-item"><label>Elemento</label><span>Paneles decorativos</span></div>
+            </div>
+            <p class="proj-full-desc">Escenografía para una gala celebrada en un teatro. Paneles calados en tonos pastel con motivos florales visten el escenario, enmarcan la proyección y aportan profundidad y color a la caja escénica.</p>
+          </div>
+          <div class="proj-gallery">
+            <img src="assets/img/feelmotion-2/1.jpg" alt="Feelmotion Gala — 1" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/feelmotion-2/2.jpg" alt="Feelmotion Gala — 2" loading="lazy" onclick="openLightbox(this.src)" />
+            <img src="assets/img/feelmotion-2/3.jpg" alt="Feelmotion Gala — 3" loading="lazy" onclick="openLightbox(this.src)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ SERVICES ══ -->
+<section id="services">
+  <div class="services-inner">
+    <p class="section-label reveal">Servicios</p>
+    <h2 class="section-title reveal reveal-delay-1">Habilidades</h2>
+    <div class="divider reveal reveal-delay-2"></div>
+    <div class="services-grid">
+      <div class="service-item reveal">
+        <div class="service-num">01</div>
+        <div class="service-name">Sketch Up</div>
+        <p class="service-desc">Visualización y modelado 3D para dar forma a ideas y espacios.</p>
+      </div>
+      <div class="service-item reveal reveal-delay-1">
+        <div class="service-num">02</div>
+        <div class="service-name">AutoCAD</div>
+        <p class="service-desc">Elaboración de planos técnicos en 2D y modelado básico en 3D.</p>
+      </div>
+      <div class="service-item reveal reveal-delay-2">
+        <div class="service-num">03</div>
+        <div class="service-name">Photoshop</div>
+        <p class="service-desc">Edición y retoque de imagenes, creeación de composiciones gráficas y preparación de material visual.</p>
+      </div>
+      <div class="service-item reveal reveal-delay-3">
+        <div class="service-num">04</div>
+        <div class="service-name">InDesing</div>
+        <p class="service-desc">Maquetación y composición editorial para la creación de láminas y material gráfico.</p>
+      </div>
+      <div class="service-item reveal reveal-delay-4">
+        <div class="service-num">05</div>
+        <div class="service-name">Office 365</div>
+        <p class="service-desc">Orghanización análisis y presentación de información para la gestión de proyectos.</p>
+      </div>
+      <div class="service-item reveal reveal-delay-5">
+        <div class="service-num">06</div>
+        <div class="service-name">Carnet de conducir</div>
+        <p class="service-desc">Presentaciones fotorrealistas para proyectos arquitectónicos, teatrales y audiovisuales. Herramienta de venta, comunicación con equipo y toma de decisiones antes de construir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-info">
+      <p class="section-label reveal">Contacto</p>
+      <h2 class="section-title reveal reveal-delay-1">Hablemos de<br>tu <em>próximo proyecto</em></h2>
+      <div class="divider reveal reveal-delay-2"></div>
+      <p class="reveal reveal-delay-2">
+        Estoy disponible para proyectos de interiores, teatro, cine y televisión. Si tienes una idea que necesita espacio, me encantaría escucharte.
+      </p>
+      <div class="contact-detail reveal reveal-delay-3">
+        <div class="contact-line">
+          <span class="contact-line-label">Email</span>
+          <span class="contact-line-val">extraese.q@gmail.com</span>
+        </div>
+        <div class="contact-line">
+          <span class="contact-line-label">Disponibilidad</span>
+          <span class="contact-line-val">Proyectos desde septiembre 2026</span>
+        </div>
+      </div>
+      <div class="social-row reveal reveal-delay-4">
+        <a href="#" class="social-link" title="Instagram">In</a>
+        <a href="#" class="social-link" title="LinkedIn">Li</a>
+        <a href="#" class="social-link" title="Behance">Be</a>
+        <a href="#" class="social-link" title="Pinterest">Pi</a>
+      </div>
+    </div>
+
+    <form class="contact-form reveal reveal-delay-2" id="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Nombre</label>
+          <input type="text" id="name" name="name" placeholder="Tu nombre" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="tu@email.com" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="type">Tipo de proyecto</label>
+        <select id="type" name="type">
+          <option value="" disabled selected>Selecciona una categoría</option>
+          <option>Diseño de interiores</option>
+          <option>Escenografía teatral</option>
+          <option>Dirección de arte — Cine</option>
+          <option>Diseño de producción — TV</option>
+          <option>Dirección creativa</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">Cuéntame tu proyecto</label>
+        <textarea id="message" name="message" rows="6" placeholder="Describe brevemente el proyecto, plazos, presupuesto estimado..." required></textarea>
+      </div>
+      <p class="form-note">Respondo en 48 horas hábiles.</p>
+      <button type="submit" class="btn-submit">Enviar mensaje</button>
+    </form>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-logo">Sara<span> </span>Segovia</div>
+  <p class="footer-copy">© 2026 Sara Segovia. Todos los derechos reservados.</p>
+  <nav class="footer-links">
+    <a href="#portfolio">Portfolio</a>
+    <a href="#services">Servicios</a>
+    <a href="#contact">Contacto</a>
+  </nav>
+</footer>
+
+<!-- ══ LIGHTBOX ══ -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" aria-label="Cerrar">&times;</span>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
+<script>
+  /* ── NAV scroll ── */
+  const mainNav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    mainNav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* ── Hamburger ── */
+  const hamburger  = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  }
+
+  /* ── Reveal on scroll ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ── Portfolio accordion ── */
+  function toggleProj(row) {
+    const item = row.closest('.proj-item');
+    const isOpen = item.classList.contains('open');
+    /* close all others */
+    document.querySelectorAll('.proj-item.open').forEach(el => {
+      el.classList.remove('open');
+      const d = el.querySelector('.proj-details');
+      if (d) d.style.maxHeight = null;
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      const details = item.querySelector('.proj-details');
+      details.style.maxHeight = details.scrollHeight + 'px';
+      details.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  /* ── Lightbox ── */
+  const lightbox    = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  function openLightbox(src) {
+    lightboxImg.src = src;
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightboxImg.src = '';
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  /* ── Form submit ── */
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.btn-submit');
+    const original = btn.textContent;
+    btn.textContent = 'Mensaje enviado ✓';
+    btn.style.background = '#4a7c59';
+    setTimeout(() => { btn.textContent = original; btn.style.background = ''; this.reset(); }, 3000);
+  });
+
+  /* ── Active nav highlight on scroll ── */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('#main-nav .nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) current = s.id; });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+    });
+  });
+</script>
+</body>
+</html>

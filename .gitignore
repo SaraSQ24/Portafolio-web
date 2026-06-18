@@ -1,0 +1,15 @@
+# Imágenes originales sin optimizar (pesadas) — no se publican.
+# La web usa las versiones optimizadas de assets/img/
+/PORTAFOLIO WEB/
+
+# Miniaturas temporales
+/_thumbs/
+
+# Configuración local de Claude Code
+.claude/settings.local.json
+
+# Archivos del sistema
+Thumbs.db
+ehthumbs.db
+.DS_Store
+desktop.ini
