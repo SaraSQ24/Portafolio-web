@@ -202,6 +202,7 @@
 
     /* ── SECTION COMMONS ── */
     section { padding: 7rem 4rem; }
+    section[id] { scroll-margin-top: 84px; }
     .section-label {
       font-size: .62rem;
       letter-spacing: .28em;
@@ -252,26 +253,6 @@
       border: 1px solid var(--gold);
       z-index: -1;
     }
-    .about-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-    .stat {
-      padding: 1.5rem;
-      border: 1px solid var(--border);
-      background: var(--bg2);
-    }
-    .stat-num {
-      font-family: var(--serif);
-      font-size: 2.5rem;
-      font-weight: 300;
-      color: var(--gold);
-      line-height: 1;
-      margin-bottom: .25rem;
-    }
-    .stat-label { font-size: .72rem; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
     .about-text p { color: rgba(242,237,230,.72); margin-bottom: 1.2rem; font-size: .95rem; }
     .skills-list {
       display: flex;
@@ -392,6 +373,8 @@
       position: relative;
     }
     .proj-img-side img {
+      position: absolute;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -576,13 +559,15 @@
     .contact-line-val { font-size: .95rem; color: var(--white); }
     .social-row { display: flex; gap: 1rem; margin-top: 2rem; }
     .social-link {
-      width: 40px; height: 40px;
+      height: 38px;
+      padding: 0 1.1rem;
       border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: .75rem;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: .62rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
       color: var(--muted);
       text-decoration: none;
-      letter-spacing: .05em;
       transition: .25s;
     }
     .social-link:hover { border-color: var(--gold); color: var(--gold); }
@@ -700,7 +685,7 @@
   <ul class="nav-links">
     <li><a href="#about">Sobre mí</a></li>
     <li><a href="#portfolio">Proyectos</a></li>
-    <li><a href="#services">Servicios</a></li>
+    <li><a href="#services">Competencias</a></li>
     <li><a href="#contact">Contacto</a></li>
   </ul>
   <button class="hamburger" id="hamburger" aria-label="Menú">
@@ -746,16 +731,21 @@
       </h2>
       <div class="divider reveal reveal-delay-2"></div>
       <p class="reveal reveal-delay-2">
-        Soy Sara Segovia, diseñadora con más de doce años de experiencia creando espacios que trascienden la función. Mi trabajo combina el rigor del diseño de interiores con la imaginación desbordante de la escenografía teatral y audiovisual.
+        Hola! Mi nombre es Sara.
       </p>
       <p class="reveal reveal-delay-3">
-        Me formé en Diseño de Interiores en la Universidad de Buenos Aires y amplié mi visión con un máster en Escenografía en la Escuela Nacional de Arte Dramático. Esta doble formación me permite leer cada espacio —real o ficticio— como un lienzo narrativo.
+        Comencé mi trayectoria estudiando diseño de interiores, una disciplina que me permitió desarrollar una sólida comprensión del espacio, la composición y la relación entre los entornos y las personas. Con el tiempo, mi pasión por el cine y el teatro, y mi interés por la fotografía me llevaron a especializarme mediante un máster en escenografía, donde descubrí la posibilidad de utilizar el espacio como una herramienta narrativa al servicio de una historia.
       </p>
       <p class="reveal reveal-delay-3">
-        Colaboro con directores, productoras y clientes privados que buscan algo más que un espacio bonito: buscan un espacio que signifique.
+        Desde entonces he trabajado en proyectos audiovisuales de diversa escala y naturaleza, incluyendo largometrajes, cortometrajes, videoclips y un programa de televisión. A lo largo de estas experiencias he participado en distintas fases del proceso creativo, desde la conceptualización y el diseño de espacios hasta la preparación, creación de props y ambientación de los sets.
+      </p>
+      <p class="reveal reveal-delay-3">
+        Me interesa especialmente la creación de atmósferas capaces de reforzar la identidad visual de cada proyecto y contribuir a la construcción de su universo narrativo. Disfruto tanto del dinamismo y la colaboración que surgen durante el rodaje como del trabajo previo de investigación, diseño y planificación que permite transformar una idea en un espacio tangible.
+      </p>
+      <p class="reveal reveal-delay-3">
+        Para mí la escenografía es la fusión perfecta entre el diseño, la arquitectura y la narrativa audiovisual, donde cada elemento tiene la capacidad de aportar un significado y enriquecer la experiencia visual. Mi objetivo es crear espacios que no solo acompañen la historia, sino que formen una parte activa de ella.
       </p>
       <div class="skills-list reveal reveal-delay-4">
-        <span class="skill-tag">Diseño de interiores</span>
         <span class="skill-tag">Escenografía teatral</span>
         <span class="skill-tag">Art direction — Cine</span>
         <span class="skill-tag">Dirección de arte — TV</span>
@@ -763,12 +753,7 @@
         <span class="skill-tag">Concept &amp; moodboard</span>
         <span class="skill-tag">Autocad / SketchUp</span>
         <span class="skill-tag">Renders 3D</span>
-      </div>
-      <div class="about-stats reveal reveal-delay-4">
-        <div class="stat"><div class="stat-num">12+</div><div class="stat-label">años de experiencia</div></div>
-        <div class="stat"><div class="stat-num">80+</div><div class="stat-label">proyectos realizados</div></div>
-        <div class="stat"><div class="stat-num">34</div><div class="stat-label">producciones audiovisuales</div></div>
-        <div class="stat"><div class="stat-num">6</div><div class="stat-label">premios &amp; nominaciones</div></div>
+        <span class="skill-tag">Diseño de interiores</span>
       </div>
     </div>
   </div>
@@ -1449,8 +1434,8 @@
 <!-- ══ SERVICES ══ -->
 <section id="services">
   <div class="services-inner">
-    <p class="section-label reveal">Servicios</p>
-    <h2 class="section-title reveal reveal-delay-1">Habilidades</h2>
+    <p class="section-label reveal">Competencias</p>
+    <h2 class="section-title reveal reveal-delay-1">Especialidades</h2>
     <div class="divider reveal reveal-delay-2"></div>
     <div class="services-grid">
       <div class="service-item reveal">
@@ -1492,26 +1477,24 @@
   <div class="contact-inner">
     <div class="contact-info">
       <p class="section-label reveal">Contacto</p>
-      <h2 class="section-title reveal reveal-delay-1">Hablemos de<br>tu <em>próximo proyecto</em></h2>
+      <h2 class="section-title reveal reveal-delay-1">Hablemos del<br> <em>próximo proyecto</em></h2>
       <div class="divider reveal reveal-delay-2"></div>
       <p class="reveal reveal-delay-2">
-        Estoy disponible para proyectos de interiores, teatro, cine y televisión. Si tienes una idea que necesita espacio, me encantaría escucharte.
+        Estoy disponible para proyectos de teatro, cine y televisión. Si tienes un proyecto y buscas equipo de arte, me encantaría participar.
       </p>
       <div class="contact-detail reveal reveal-delay-3">
         <div class="contact-line">
           <span class="contact-line-label">Email</span>
-          <span class="contact-line-val">extraese.q@gmail.com</span>
+          <span class="contact-line-val">sararosgra@gmail.com</span>
         </div>
         <div class="contact-line">
           <span class="contact-line-label">Disponibilidad</span>
-          <span class="contact-line-val">Proyectos desde septiembre 2026</span>
+          <span class="contact-line-val">Proyectos desde julio 2026</span>
         </div>
       </div>
       <div class="social-row reveal reveal-delay-4">
-        <a href="#" class="social-link" title="Instagram">In</a>
-        <a href="#" class="social-link" title="LinkedIn">Li</a>
-        <a href="#" class="social-link" title="Behance">Be</a>
-        <a href="#" class="social-link" title="Pinterest">Pi</a>
+        <a href="#" class="social-link" title="Instagram">Instagram</a>
+        <a href="#" class="social-link" title="LinkedIn">LinkedIn</a>
       </div>
     </div>
 
@@ -1530,11 +1513,11 @@
         <label for="type">Tipo de proyecto</label>
         <select id="type" name="type">
           <option value="" disabled selected>Selecciona una categoría</option>
-          <option>Diseño de interiores</option>
           <option>Escenografía teatral</option>
-          <option>Dirección de arte — Cine</option>
-          <option>Diseño de producción — TV</option>
-          <option>Dirección creativa</option>
+          <option>Cine</option>
+          <option>TV</option>
+          <option>Cortometrajes</option>
+          <option>Videoclips</option>
           <option>Otro</option>
         </select>
       </div>
@@ -1554,7 +1537,7 @@
   <p class="footer-copy">© 2026 Sara Segovia. Todos los derechos reservados.</p>
   <nav class="footer-links">
     <a href="#portfolio">Portfolio</a>
-    <a href="#services">Servicios</a>
+    <a href="#services">Competencias</a>
     <a href="#contact">Contacto</a>
   </nav>
 </footer>
