@@ -319,7 +319,6 @@
       transition: color .4s;
       user-select: none;
     }
-    .proj-item:nth-child(even) .proj-num { right: auto; left: 4rem; }
     .proj-item.open .proj-num,
     .proj-row:hover .proj-num { color: rgba(201,168,76,.18); }
 
@@ -461,6 +460,99 @@
       color: var(--white);
     }
     .proj-group-title em { font-style: italic; color: var(--gold-lt); }
+
+    /* ── CATEGORY ACCORDION ── */
+    .proj-cat {
+      max-width: 1200px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border);
+    }
+    .proj-cat:last-of-type { border-bottom: 1px solid var(--border); }
+    .proj-cat-head {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 2.3rem 0;
+      cursor: pointer;
+      scroll-margin-top: 90px;
+    }
+    .proj-cat-index {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--gold);
+      letter-spacing: .05em;
+    }
+    .proj-cat-title {
+      flex: 1;
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 3vw, 2.4rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--white);
+      transition: color .25s;
+    }
+    .proj-cat-head:hover .proj-cat-title { color: var(--gold-lt); }
+    .proj-cat-count {
+      font-size: .68rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .proj-cat-icon {
+      flex-shrink: 0;
+      width: 34px; height: 34px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; line-height: 1;
+      color: var(--muted);
+      transition: transform .4s, border-color .25s, color .25s;
+    }
+    .proj-cat-head:hover .proj-cat-icon { border-color: var(--gold); color: var(--gold); }
+    .proj-cat.open .proj-cat-icon { transform: rotate(45deg); border-color: var(--gold); color: var(--gold); }
+    .proj-cat-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows .55s cubic-bezier(.25,.46,.45,.94);
+    }
+    .proj-cat.open .proj-cat-body { grid-template-rows: 1fr; }
+    .proj-cat-body-inner { overflow: hidden; min-height: 0; }
+    .proj-cat .proj-list { border-top: none; padding-bottom: 1.2rem; }
+
+    /* ── EMBEDDED VIDEO ── */
+    .proj-video {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .proj-video iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      border: 0;
+      display: block;
+    }
+    .proj-video-solo { margin-top: 2.6rem; max-width: 900px; }
+    .proj-video-pending {
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+      border-style: dashed;
+    }
+    /* video + gallery side by side (videoclips) */
+    .proj-media {
+      margin-top: 2.6rem;
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 1.4rem;
+      align-items: start;
+    }
+    .proj-media .proj-gallery {
+      margin-top: 0;
+      grid-template-columns: repeat(2, 1fr);
+    }
 
     /* Lightbox */
     .lightbox {
@@ -664,6 +756,7 @@
       .proj-num { display: none; }
       .proj-details-inner { padding: 2rem; }
       .proj-details-top { grid-template-columns: 1fr; gap: 1.5rem; }
+      .proj-media { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
       .nav-links { display: none; }
@@ -764,32 +857,36 @@
   <div class="portfolio-top">
     <p class="section-label reveal">Proyectos</p>
     <h2 class="section-title reveal reveal-delay-1">Obra seleccionada</h2>
-    <p class="reveal reveal-delay-2" style="max-width:620px;color:rgba(242,237,230,.6);font-size:.95rem;">Una selección de trabajos de dirección de arte, escenografía y diseño de espacios. Haz clic en cualquier proyecto para ver la ficha y la galería completa.</p>
+    <p class="reveal reveal-delay-2" style="max-width:620px;color:rgba(242,237,230,.6);font-size:.95rem;">Una selección de trabajos de dirección de arte, escenografía y diseño de espacios, organizados por etapa. Despliega una categoría y, dentro, cada proyecto para ver su ficha, galería y vídeo.</p>
   </div>
 
-  <!-- ░░ GRUPO 1 · PROFESIONALES ░░ -->
-  <div class="proj-group-head reveal">
-    <span class="proj-group-kicker">01 — Proyectos profesionales</span>
-    <h3 class="proj-group-title">Cine, televisión y <em>videoclip</em></h3>
-  </div>
+  <!-- ░░ CATEGORÍA 1 · PROFESIONALES ░░ -->
+  <div class="proj-cat reveal">
+    <div class="proj-cat-head" onclick="toggleCat(this)">
+      <span class="proj-cat-index">01</span>
+      <h3 class="proj-cat-title">Proyectos profesionales</h3>
+      <span class="proj-cat-count">5 proyectos</span>
+      <span class="proj-cat-icon">+</span>
+    </div>
+    <div class="proj-cat-body"><div class="proj-cat-body-inner">
 
   <div class="proj-list">
 
-    <!-- 01 · Timadores -->
-    <div class="proj-item reveal">
+    <!-- 01 · Los Tortuga -->
+    <div class="proj-item">
       <div class="proj-row" onclick="toggleProj(this)">
         <div class="proj-text">
           <span class="proj-num">01</span>
-          <div class="proj-cat-tag">Serie de TV · Dirección de arte</div>
-          <h3 class="proj-title">Timadores</h3>
-          <p class="proj-summary">Dirección de arte de los decorados de la serie de televisión: un universo distinto por episodio, del laboratorio forense a una parada de melones en plena carretera.</p>
+          <div class="proj-cat-tag">Película · Equipo de arte</div>
+          <h3 class="proj-title">Los Tortuga</h3>
+          <p class="proj-summary">Equipo de arte de los decorados de la película. Tráiler disponible dentro del desplegable.</p>
           <div class="proj-toggle">
             <span class="proj-toggle-icon">+</span>
             <span>Ver proyecto</span>
           </div>
         </div>
         <div class="proj-img-side">
-          <img src="assets/img/timadores/cover.jpg" alt="Timadores" loading="lazy" />
+          <img src="assets/img/los-tortuga/Acceso.jpg" alt="Los Tortuga" loading="lazy" />
         </div>
       </div>
       <div class="proj-details">
@@ -797,79 +894,24 @@
           <div class="proj-details-top">
             <div class="proj-meta-grid">
               <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto profesional</span></div>
-              <div class="proj-meta-item"><label>Formato</label><span>Serie de televisión</span></div>
+              <div class="proj-meta-item"><label>Formato</label><span>Película</span></div>
               <div class="proj-meta-item"><label>Rol</label><span>Dirección de arte y ambientación</span></div>
-              <div class="proj-meta-item"><label>Decorados</label><span>Múltiples episodios</span></div>
+              <div class="proj-meta-item"><label>Decorados</label><span>Sets</span></div>
             </div>
-            <p class="proj-full-desc">Dirección de arte y ambientación de los decorados de la serie. Cada episodio plantea un mundo propio —un laboratorio forense, un desván de inspiración zen, un taller de restauración arqueológica, una parada de melones en plena carretera o un escenario ritual— que hay que documentar, construir y vestir hasta el último detalle para que la cámara lo dé por real.</p>
+            <p class="proj-full-desc">Equipo de arte y ambientación de los decorados de la película. Puedes ver el tráiler completo aquí mismo.</p>
           </div>
-          <div class="proj-gallery">
-            <img src="assets/img/timadores/1.jpg" alt="Timadores — decorado 1" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/timadores/2.jpg" alt="Timadores — decorado 2" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/timadores/3.jpg" alt="Timadores — decorado 3" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/timadores/4.jpg" alt="Timadores — decorado 4" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/timadores/5.jpg" alt="Timadores — decorado 5" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/timadores/6.jpg" alt="Timadores — decorado 6" loading="lazy" onclick="openLightbox(this.src)" />
+          <div class="proj-video proj-video-solo">
+            <iframe src="https://www.youtube.com/embed/ShaBC3p7EQA?rel=0" title="Los Tortuga — Tráiler" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 02 · Slasher -->
-    <div class="proj-item reveal">
+    <!-- 02 · Circus -->
+    <div class="proj-item">
       <div class="proj-row" onclick="toggleProj(this)">
         <div class="proj-text">
           <span class="proj-num">02</span>
-          <div class="proj-cat-tag">Cortometraje · Terror</div>
-          <h3 class="proj-title">Slasher</h3>
-          <p class="proj-summary">Ambientación de un cortometraje de terror. El panel de pistas y la máscara siembran la amenaza mucho antes de que aparezca el asesino.</p>
-          <div class="proj-toggle">
-            <span class="proj-toggle-icon">+</span>
-            <span>Ver proyecto</span>
-          </div>
-        </div>
-        <div class="proj-img-side">
-          <img src="assets/img/slasher/cover.jpg" alt="Slasher" loading="lazy" />
-        </div>
-      </div>
-      <div class="proj-details">
-        <div class="proj-details-inner">
-          <div class="proj-details-top">
-            <div class="proj-meta-grid">
-              <div class="proj-meta-item"><label>Ámbito</label><span>Proyecto profesional</span></div>
-              <div class="proj-meta-item"><label>Formato</label><span>Cortometraje</span></div>
-              <div class="proj-meta-item"><label>Género</label><span>Terror · thriller</span></div>
-              <div class="proj-meta-item"><label>Rol</label><span>Dirección de arte</span></div>
-            </div>
-            <p class="proj-full-desc">Dirección de arte de un cortometraje de terror. El espacio de investigación —el panel de fotografías unidas por hilos, los recortes, la máscara colgada en la pared— se diseña para sembrar la amenaza mucho antes de que aparezca el asesino. Cada objeto es a la vez pista y presagio.</p>
-          </div>
-          <div class="proj-gallery">
-            <img src="assets/img/slasher/1.jpg" alt="Slasher — 1" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/slasher/2.jpg" alt="Slasher — 2" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/slasher/3.jpg" alt="Slasher — 3" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/slasher/4.jpg" alt="Slasher — 4" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/slasher/5.jpg" alt="Slasher — 5" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/slasher/6.jpg" alt="Slasher — 6" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/slasher/7.jpg" alt="Slasher — 7" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/slasher/8.jpg" alt="Slasher — 8" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/slasher/9.jpg" alt="Slasher — 9" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/slasher/10.jpg" alt="Slasher — 10" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/slasher/11.jpg" alt="Slasher — 11" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/slasher/12.jpg" alt="Slasher — 12" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/slasher/13.jpg" alt="Slasher — 13" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/slasher/14.jpg" alt="Slasher — 14" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/slasher/15.jpg" alt="Slasher — 15" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/slasher/16.jpg" alt="Slasher — 16" loading="lazy" onclick="openLightbox(this.src)" />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 03 · Circus -->
-    <div class="proj-item reveal">
-      <div class="proj-row" onclick="toggleProj(this)">
-        <div class="proj-text">
-          <span class="proj-num">03</span>
           <div class="proj-cat-tag">Audiovisual · Ambientación</div>
           <h3 class="proj-title">Circus</h3>
           <p class="proj-summary">Ambientación de aire vintage y cabaret: terciopelo rojo, mobiliario de época y vestuario circense compuestos en un solo plano.</p>
@@ -902,11 +944,11 @@
       </div>
     </div>
 
-    <!-- 04 · Cortometraje ESCAC -->
-    <div class="proj-item reveal">
+    <!-- 03 · Cortometraje ESCAC -->
+    <div class="proj-item">
       <div class="proj-row" onclick="toggleProj(this)">
         <div class="proj-text">
-          <span class="proj-num">04</span>
+          <span class="proj-num">03</span>
           <div class="proj-cat-tag">Cortometraje · ESCAC</div>
           <h3 class="proj-title">Cortometraje ESCAC</h3>
           <p class="proj-summary">Dirección de arte de un cortometraje de la ESCAC: una cena navideña doméstica resuelta hasta el último detalle de mesa y atrezzo.</p>
@@ -939,11 +981,11 @@
       </div>
     </div>
 
-    <!-- 05 · Welcome to my Party -->
-    <div class="proj-item reveal">
+    <!-- 04 · Welcome to my Party -->
+    <div class="proj-item">
       <div class="proj-row" onclick="toggleProj(this)">
         <div class="proj-text">
-          <span class="proj-num">05</span>
+          <span class="proj-num">04</span>
           <div class="proj-cat-tag">Videoclip · Escenografía</div>
           <h3 class="proj-title">Welcome to my Party</h3>
           <p class="proj-summary">Set de videoclip con estética de fiesta onírica: una gran luna dorada, nubes, estrellas y cortinas de terciopelo y oropel.</p>
@@ -967,19 +1009,22 @@
             </div>
             <p class="proj-full-desc">Diseño y construcción del set de un videoclip con estética de fiesta onírica. Una gran luna creciente dorada, nubes de algodón, estrellas y cortinas de terciopelo y oropel transforman el escenario en un universo celeste y festivo.</p>
           </div>
-          <div class="proj-gallery">
-            <img src="assets/img/welcome/1.jpg" alt="Welcome to my Party — 1" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/welcome/2.jpg" alt="Welcome to my Party — 2" loading="lazy" onclick="openLightbox(this.src)" />
+          <div class="proj-media">
+            <div class="proj-video proj-video-pending" data-video="welcome"><span>▶ Videoclip · enlace pendiente</span></div>
+            <div class="proj-gallery">
+              <img src="assets/img/welcome/1.jpg" alt="Welcome to my Party — 1" loading="lazy" onclick="openLightbox(this.src)" />
+              <img src="assets/img/welcome/2.jpg" alt="Welcome to my Party — 2" loading="lazy" onclick="openLightbox(this.src)" />
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 06 · Diumenge sense drama -->
-    <div class="proj-item reveal">
+    <!-- 05 · Diumenge sense drama -->
+    <div class="proj-item">
       <div class="proj-row" onclick="toggleProj(this)">
         <div class="proj-text">
-          <span class="proj-num">06</span>
+          <span class="proj-num">05</span>
           <div class="proj-cat-tag">Videoclip · Ambientación</div>
           <h3 class="proj-title">Diumenge sense drama</h3>
           <p class="proj-summary">Dirección de arte de un videoclip en exteriores: banderas y estandartes de color transforman un paseo marítimo en una fiesta popular.</p>
@@ -1003,12 +1048,15 @@
             </div>
             <p class="proj-full-desc">Dirección de arte de un videoclip rodado en exteriores. Banderas, estandartes y elementos de color convierten un paseo marítimo en una celebración popular; la paleta se pensó para destacar incluso bajo un cielo cambiante.</p>
           </div>
-          <div class="proj-gallery">
-            <img src="assets/img/diumenge/1.jpg" alt="Diumenge sense drama — 1" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/diumenge/2.jpg" alt="Diumenge sense drama — 2" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/diumenge/3.jpg" alt="Diumenge sense drama — 3" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/diumenge/4.jpg" alt="Diumenge sense drama — 4" loading="lazy" onclick="openLightbox(this.src)" />
-            <img src="assets/img/diumenge/5.jpg" alt="Diumenge sense drama — 5" loading="lazy" onclick="openLightbox(this.src)" />
+          <div class="proj-media">
+            <div class="proj-video proj-video-pending" data-video="diumenge"><span>▶ Videoclip · enlace pendiente</span></div>
+            <div class="proj-gallery">
+              <img src="assets/img/diumenge/1.jpg" alt="Diumenge sense drama — 1" loading="lazy" onclick="openLightbox(this.src)" />
+              <img src="assets/img/diumenge/2.jpg" alt="Diumenge sense drama — 2" loading="lazy" onclick="openLightbox(this.src)" />
+              <img src="assets/img/diumenge/3.jpg" alt="Diumenge sense drama — 3" loading="lazy" onclick="openLightbox(this.src)" />
+              <img src="assets/img/diumenge/4.jpg" alt="Diumenge sense drama — 4" loading="lazy" onclick="openLightbox(this.src)" />
+              <img src="assets/img/diumenge/5.jpg" alt="Diumenge sense drama — 5" loading="lazy" onclick="openLightbox(this.src)" />
+            </div>
           </div>
         </div>
       </div>
@@ -1016,19 +1064,26 @@
 
   </div>
 
-  <!-- ░░ GRUPO 2 · MÁSTER ░░ -->
-  <div class="proj-group-head reveal">
-    <span class="proj-group-kicker">02 — Proyectos de máster</span>
-    <h3 class="proj-group-title">Decorado y <em>escenografía</em></h3>
+    </div></div>
   </div>
+
+  <!-- ░░ CATEGORÍA 2 · MÁSTER ░░ -->
+  <div class="proj-cat reveal">
+    <div class="proj-cat-head" onclick="toggleCat(this)">
+      <span class="proj-cat-index">02</span>
+      <h3 class="proj-cat-title">Proyectos de máster</h3>
+      <span class="proj-cat-count">4 proyectos</span>
+      <span class="proj-cat-icon">+</span>
+    </div>
+    <div class="proj-cat-body"><div class="proj-cat-body-inner">
 
   <div class="proj-list">
 
-    <!-- 07 · The Lighthouse -->
-    <div class="proj-item reveal">
+    <!-- 01 · The Lighthouse -->
+    <div class="proj-item">
       <div class="proj-row" onclick="toggleProj(this)">
         <div class="proj-text">
-          <span class="proj-num">07</span>
+          <span class="proj-num">01</span>
           <div class="proj-cat-tag">Máster · Decorado 3D</div>
           <h3 class="proj-title">The Lighthouse</h3>
           <p class="proj-summary">Decorado interior de un faro modelado en 3D: piedra, hierro y una escalera de caracol con atrezzo minucioso.</p>
@@ -1064,11 +1119,11 @@
       </div>
     </div>
 
-    <!-- 08 · Jared y el Walkman -->
-    <div class="proj-item reveal">
+    <!-- 02 · Jared y el Walkman -->
+    <div class="proj-item">
       <div class="proj-row" onclick="toggleProj(this)">
         <div class="proj-text">
-          <span class="proj-num">08</span>
+          <span class="proj-num">02</span>
           <div class="proj-cat-tag">Máster · Decorado 3D</div>
           <h3 class="proj-title">Jared y el Walkman</h3>
           <p class="proj-summary">Decorado para el proyecto «Jared y el Walkman» resuelto en 3D: un interior de ventanales, vitrinas y superficies reflectantes.</p>
@@ -1112,11 +1167,11 @@
       </div>
     </div>
 
-    <!-- 09 · La casa de Bernarda Alba -->
-    <div class="proj-item reveal">
+    <!-- 03 · La casa de Bernarda Alba -->
+    <div class="proj-item">
       <div class="proj-row" onclick="toggleProj(this)">
         <div class="proj-text">
-          <span class="proj-num">09</span>
+          <span class="proj-num">03</span>
           <div class="proj-cat-tag">Máster · Escenografía teatral</div>
           <h3 class="proj-title">La casa de Bernarda Alba</h3>
           <p class="proj-summary">Maqueta escenográfica para la obra de Lorca: muros encalados y arcos bañados por una luz roja que vuelve el patio una cárcel.</p>
@@ -1153,11 +1208,11 @@
       </div>
     </div>
 
-    <!-- 10 · Máscara -->
-    <div class="proj-item reveal">
+    <!-- 04 · Máscara -->
+    <div class="proj-item">
       <div class="proj-row" onclick="toggleProj(this)">
         <div class="proj-text">
-          <span class="proj-num">10</span>
+          <span class="proj-num">04</span>
           <div class="proj-cat-tag">Máster · Atrezzo</div>
           <h3 class="proj-title">Máscara</h3>
           <p class="proj-summary">Máscara-objeto construida con técnicas mixtas: flores naturales y un paisaje pintado montados sobre el rostro.</p>
@@ -1192,19 +1247,26 @@
 
   </div>
 
-  <!-- ░░ GRUPO 3 · CARRERA ░░ -->
-  <div class="proj-group-head reveal">
-    <span class="proj-group-kicker">03 — Proyectos de carrera</span>
-    <h3 class="proj-group-title">Diseño de espacios y <em>eventos</em></h3>
+    </div></div>
   </div>
+
+  <!-- ░░ CATEGORÍA 3 · CARRERA ░░ -->
+  <div class="proj-cat reveal">
+    <div class="proj-cat-head" onclick="toggleCat(this)">
+      <span class="proj-cat-index">03</span>
+      <h3 class="proj-cat-title">Proyectos de carrera</h3>
+      <span class="proj-cat-count">6 proyectos</span>
+      <span class="proj-cat-icon">+</span>
+    </div>
+    <div class="proj-cat-body"><div class="proj-cat-body-inner">
 
   <div class="proj-list">
 
-    <!-- 11 · Renature -->
-    <div class="proj-item reveal">
+    <!-- 01 · Renature -->
+    <div class="proj-item">
       <div class="proj-row" onclick="toggleProj(this)">
         <div class="proj-text">
-          <span class="proj-num">11</span>
+          <span class="proj-num">01</span>
           <div class="proj-cat-tag">Grado · Diseño de espacios</div>
           <h3 class="proj-title">Renature</h3>
           <p class="proj-summary">Proyecto que reintroduce la naturaleza en el edificio: la vegetación coloniza la sección y borra el límite entre dentro y fuera.</p>
@@ -1240,11 +1302,11 @@
       </div>
     </div>
 
-    <!-- 12 · Isla Trufa -->
-    <div class="proj-item reveal">
+    <!-- 02 · Isla Trufa -->
+    <div class="proj-item">
       <div class="proj-row" onclick="toggleProj(this)">
         <div class="proj-text">
-          <span class="proj-num">12</span>
+          <span class="proj-num">02</span>
           <div class="proj-cat-tag">Grado · Interiorismo</div>
           <h3 class="proj-title">Isla Trufa</h3>
           <p class="proj-summary">Espacio gastronómico dibujado en sección: cocina, barra y sala enlazadas por una circulación continua en clave monocroma.</p>
@@ -1276,11 +1338,11 @@
       </div>
     </div>
 
-    <!-- 13 · Netting · Mahou -->
-    <div class="proj-item reveal">
+    <!-- 03 · Netting · Mahou -->
+    <div class="proj-item">
       <div class="proj-row" onclick="toggleProj(this)">
         <div class="proj-text">
-          <span class="proj-num">13</span>
+          <span class="proj-num">03</span>
           <div class="proj-cat-tag">Grado · Espacio efímero</div>
           <h3 class="proj-title">Netting · Mahou</h3>
           <p class="proj-summary">Espacio efímero para Mahou: una malla roja suspendida modela volúmenes y guía el recorrido sin levantar un solo muro.</p>
@@ -1316,11 +1378,11 @@
       </div>
     </div>
 
-    <!-- 14 · Instante -->
-    <div class="proj-item reveal">
+    <!-- 04 · Instante -->
+    <div class="proj-item">
       <div class="proj-row" onclick="toggleProj(this)">
         <div class="proj-text">
-          <span class="proj-num">14</span>
+          <span class="proj-num">04</span>
           <div class="proj-cat-tag">Grado · Diseño expositivo</div>
           <h3 class="proj-title">Instante</h3>
           <p class="proj-summary">Diseño expositivo sobre fotografía comunicado con una axonometría explotada que descompone salas, paneles y recorrido.</p>
@@ -1355,11 +1417,11 @@
       </div>
     </div>
 
-    <!-- 15 · Feelmotion — Evento Gaming -->
-    <div class="proj-item reveal">
+    <!-- 05 · Feelmotion — Evento Gaming -->
+    <div class="proj-item">
       <div class="proj-row" onclick="toggleProj(this)">
         <div class="proj-text">
-          <span class="proj-num">15</span>
+          <span class="proj-num">05</span>
           <div class="proj-cat-tag">Grado · Evento</div>
           <h3 class="proj-title">Feelmotion — Evento Gaming</h3>
           <p class="proj-summary">Escenografía efímera para un evento gaming: tótems de cubos retroiluminados que forman la palabra GAME con iconos del videojuego.</p>
@@ -1391,11 +1453,11 @@
       </div>
     </div>
 
-    <!-- 16 · Feelmotion — Gala -->
-    <div class="proj-item reveal">
+    <!-- 06 · Feelmotion — Gala -->
+    <div class="proj-item">
       <div class="proj-row" onclick="toggleProj(this)">
         <div class="proj-text">
-          <span class="proj-num">16</span>
+          <span class="proj-num">06</span>
           <div class="proj-cat-tag">Grado · Escenografía</div>
           <h3 class="proj-title">Feelmotion — Gala</h3>
           <p class="proj-summary">Escenografía para una gala en teatro: paneles calados en tonos pastel con motivos florales que visten la caja escénica.</p>
@@ -1428,6 +1490,9 @@
       </div>
     </div>
 
+  </div>
+
+    </div></div>
   </div>
 </section>
 
@@ -1588,6 +1653,17 @@
       const details = item.querySelector('.proj-details');
       details.style.maxHeight = details.scrollHeight + 'px';
       details.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  /* ── Category accordion (one open at a time) ── */
+  function toggleCat(head) {
+    const cat = head.closest('.proj-cat');
+    const isOpen = cat.classList.contains('open');
+    document.querySelectorAll('.proj-cat.open').forEach(c => c.classList.remove('open'));
+    if (!isOpen) {
+      cat.classList.add('open');
+      head.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 
