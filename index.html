@@ -523,7 +523,7 @@
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
-      background: #000;
+      background: #000 center / cover no-repeat;
       border: 1px solid var(--border);
       overflow: hidden;
     }
@@ -535,12 +535,29 @@
       display: block;
     }
     .proj-video-solo { margin-top: 2.6rem; max-width: 900px; }
-    .proj-video-pending {
+    .proj-video-play {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
-      color: var(--muted);
-      font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
-      border-style: dashed;
+      background: rgba(13,13,13,.35);
+      border: 0;
+      cursor: pointer;
+      transition: background .25s;
     }
+    .proj-video-play:hover { background: rgba(13,13,13,.12); }
+    .proj-video-play::before {
+      content: '►';
+      display: flex; align-items: center; justify-content: center;
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--bg);
+      font-size: 1.5rem;
+      padding-left: 4px;
+      transition: transform .25s, background .25s;
+    }
+    .proj-video-play:hover::before { transform: scale(1.08); background: var(--gold-lt); }
     /* video + gallery side by side (videoclips) */
     .proj-media {
       margin-top: 2.6rem;
@@ -750,7 +767,7 @@
       .contact-inner { grid-template-columns: 1fr; gap: 3.5rem; }
     }
     @media (max-width: 900px) {
-      .proj-row { flex-direction: column !important; min-height: unset; }
+      .proj-row { flex-direction: column-reverse !important; min-height: unset; }
       .proj-img-side { flex: 0 0 260px; height: 260px; }
       .proj-text { padding: 2.5rem 2rem; }
       .proj-num { display: none; }
@@ -799,7 +816,7 @@
   <div class="hero-content">
     <div class="hero-tag">Diseñadora de interiores &amp; escenógrafa</div>
     <h1 class="hero-title">
-      Espacios que<br><em>cuentan historias</em>
+      Los espacios<br><em>cuentan historias</em>
     </h1>
     <p class="hero-subtitle">
       Creo entornos que emocionan, desde residencias de autor hasta escenografías para teatro, cine y televisión. Cada proyecto es un universo visual con voz propia.
@@ -856,8 +873,8 @@
 <section id="portfolio">
   <div class="portfolio-top">
     <p class="section-label reveal">Proyectos</p>
-    <h2 class="section-title reveal reveal-delay-1">Obra seleccionada</h2>
-    <p class="reveal reveal-delay-2" style="max-width:620px;color:rgba(242,237,230,.6);font-size:.95rem;">Una selección de trabajos de dirección de arte, escenografía y diseño de espacios, organizados por etapa. Despliega una categoría y, dentro, cada proyecto para ver su ficha, galería y vídeo.</p>
+    <h2 class="section-title reveal reveal-delay-1">Mis trabajos</h2>
+    <p class="reveal reveal-delay-2" style="max-width:620px;color:rgba(242,237,230,.6);font-size:.95rem;">Una selección de trabajos de arte, escenografía y diseño de espacios, organizados por etapa. Despliega una categoría y, dentro, cada proyecto para ver su ficha y galería</p>
   </div>
 
   <!-- ░░ CATEGORÍA 1 · PROFESIONALES ░░ -->
@@ -900,8 +917,8 @@
             </div>
             <p class="proj-full-desc">Equipo de arte y ambientación de los decorados de la película. Puedes ver el tráiler completo aquí mismo.</p>
           </div>
-          <div class="proj-video proj-video-solo">
-            <iframe src="https://www.youtube.com/embed/ShaBC3p7EQA?rel=0" title="Los Tortuga — Tráiler" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <div class="proj-video proj-video-solo" data-yt="ShaBC3p7EQA" style="background-image:url('assets/img/los-tortuga/Acceso.jpg')">
+            <button type="button" class="proj-video-play" onclick="playVideo(this)" aria-label="Reproducir tráiler"></button>
           </div>
         </div>
       </div>
@@ -1010,7 +1027,9 @@
             <p class="proj-full-desc">Diseño y construcción del set de un videoclip con estética de fiesta onírica. Una gran luna creciente dorada, nubes de algodón, estrellas y cortinas de terciopelo y oropel transforman el escenario en un universo celeste y festivo.</p>
           </div>
           <div class="proj-media">
-            <div class="proj-video proj-video-pending" data-video="welcome"><span>▶ Videoclip · enlace pendiente</span></div>
+            <div class="proj-video" data-yt="baMN3H7uZZ0" style="background-image:url('assets/img/welcome/cover.jpg')">
+              <button type="button" class="proj-video-play" onclick="playVideo(this)" aria-label="Reproducir videoclip"></button>
+            </div>
             <div class="proj-gallery">
               <img src="assets/img/welcome/1.jpg" alt="Welcome to my Party — 1" loading="lazy" onclick="openLightbox(this.src)" />
               <img src="assets/img/welcome/2.jpg" alt="Welcome to my Party — 2" loading="lazy" onclick="openLightbox(this.src)" />
@@ -1049,7 +1068,9 @@
             <p class="proj-full-desc">Dirección de arte de un videoclip rodado en exteriores. Banderas, estandartes y elementos de color convierten un paseo marítimo en una celebración popular; la paleta se pensó para destacar incluso bajo un cielo cambiante.</p>
           </div>
           <div class="proj-media">
-            <div class="proj-video proj-video-pending" data-video="diumenge"><span>▶ Videoclip · enlace pendiente</span></div>
+            <div class="proj-video" data-yt="-oVE1roIA1k" style="background-image:url('assets/img/diumenge/cover.jpg')">
+              <button type="button" class="proj-video-play" onclick="playVideo(this)" aria-label="Reproducir videoclip"></button>
+            </div>
             <div class="proj-gallery">
               <img src="assets/img/diumenge/1.jpg" alt="Diumenge sense drama — 1" loading="lazy" onclick="openLightbox(this.src)" />
               <img src="assets/img/diumenge/2.jpg" alt="Diumenge sense drama — 2" loading="lazy" onclick="openLightbox(this.src)" />
@@ -1531,7 +1552,6 @@
       <div class="service-item reveal reveal-delay-5">
         <div class="service-num">06</div>
         <div class="service-name">Carnet de conducir</div>
-        <p class="service-desc">Presentaciones fotorrealistas para proyectos arquitectónicos, teatrales y audiovisuales. Herramienta de venta, comunicación con equipo y toma de decisiones antes de construir.</p>
       </div>
     </div>
   </div>
@@ -1558,8 +1578,9 @@
         </div>
       </div>
       <div class="social-row reveal reveal-delay-4">
-        <a href="#" class="social-link" title="Instagram">Instagram</a>
-        <a href="#" class="social-link" title="LinkedIn">LinkedIn</a>
+        <!-- Redes: sustituye el "#" por la URL de tu perfil (deja el resto igual) -->
+        <a href="#" target="_blank" rel="noopener" class="social-link" title="Instagram">Instagram</a>
+        <a href="#" target="_blank" rel="noopener" class="social-link" title="LinkedIn">LinkedIn</a>
       </div>
     </div>
 
@@ -1588,7 +1609,7 @@
       </div>
       <div class="form-group">
         <label for="message">Cuéntame tu proyecto</label>
-        <textarea id="message" name="message" rows="6" placeholder="Describe brevemente el proyecto, plazos, presupuesto estimado..." required></textarea>
+        <textarea id="message" name="message" rows="6" placeholder="Describe brevemente el proyecto, plazos, etc..." required></textarea>
       </div>
       <p class="form-note">Respondo en 48 horas hábiles.</p>
       <button type="submit" class="btn-submit">Enviar mensaje</button>
@@ -1665,6 +1686,15 @@
       cat.classList.add('open');
       head.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+  }
+
+  /* ── YouTube facade: carga el reproductor solo al pulsar play (evita el Error 153) ── */
+  function playVideo(btn) {
+    const box = btn.closest('.proj-video');
+    const id = box && box.dataset.yt;
+    if (!id) return;
+    box.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + id +
+      '?autoplay=1&rel=0&playsinline=1" title="Vídeo" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
   }
 
   /* ── Lightbox ── */
